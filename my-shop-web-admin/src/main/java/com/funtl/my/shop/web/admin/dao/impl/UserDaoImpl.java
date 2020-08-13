@@ -16,13 +16,13 @@ public class UserDaoImpl implements UserDao {
     private  static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
 
-    public User getUser(String email, String passward) {
-        logger.debug("调用 getUser(), email：{} password: {}", email, passward);
+    public User getUser(String email, String password) {
+        logger.debug("调用 getUser(), email：{} password: {}", email, password);
 
         User user = null;
 
         if("admin@funtl.com".equals(email)){
-            if("admin".equals(passward)){
+            if("admin".equals(password)){
                 user = new User();
                 user.setEmail("admin@funtl.com");
                 user.setUsername("Lusifer");
