@@ -17,4 +17,33 @@ public interface TbUserDao {
      * @return
      */
     public List<TbUser> selectAll();
+
+    /**
+     * 新增
+     * @param tbUser
+     */
+    void insert(TbUser tbUser);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void delete(Long id);
+
+
+    /**
+     * 根据id查询用户信息
+     * @param id
+     * @return
+     */
+    TbUser getById(Long id);
+
+    void updated(TbUser tbUser);
+
+    /**
+     * 根据用户名进行模糊匹配
+     * @param username
+     * @return
+     */
+    List<TbUser> selectByUsername(String username);
 }
