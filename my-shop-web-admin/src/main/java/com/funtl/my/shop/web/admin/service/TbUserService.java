@@ -21,4 +21,13 @@ public interface TbUserService {
     void update(TbUser tbUser);
 
     List<TbUser> selectByUsername(String name);
+
+    /**
+     * 用户登录
+     * @param email
+     * @param password
+     * @return
+     */
+    TbUser login(String email, String password);
+
 }

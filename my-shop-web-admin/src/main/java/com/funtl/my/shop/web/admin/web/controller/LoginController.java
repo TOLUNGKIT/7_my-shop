@@ -1,11 +1,11 @@
 package com.funtl.my.shop.web.admin.web.controller;
 
 import com.funtl.my.shop.commons.constant.ConstantUtils;
-import com.funtl.my.shop.commons.utils.CookieUtils;
-import com.funtl.my.shop.domain.User;
-import com.funtl.my.shop.web.admin.service.UserService;
+import com.funtl.my.shop.domain.TbUser;
+import com.funtl.my.shop.web.admin.service.TbUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+    private TbUserService tbUserService;
 
     private static final String COOKIE_NAME_USER_INFO = "userInfo";
 
@@ -44,28 +44,22 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "login" , method = RequestMethod.POST)
-    public String Login(@RequestParam(required = true) String email, @RequestParam(required = true) String password, HttpServletRequest req, HttpServletResponse resp) {
+    public String Login(@RequestParam(required = true) String email, @RequestParam(required = true) String password, HttpServletRequest req, HttpServletResponse resp, Model model) {
 
-        User user = userService.login(email, password);
+        TbUser tbUser = tbUserService.login(email, password);
 
-        boolean isRemember = req.getParameter("isRemember") == null ? false : true;
+        //登陆失败
+        if(tbUser == null){
 
-        //登录失败
-        if (user == null) {
-            req.setAttribute("message","用户名或密码错误，请重新登录");
+            model.addAttribute("message","用户名或密码错误，请重新输入");
             return login();
         }
 
-        //登录成功
+        //登陆成功
         else {
-            if(isRemember==true){
-                //用户信息存一周
-                CookieUtils.setCookie(req,resp,COOKIE_NAME_USER_INFO,String.format("%s:%s",email,password),7*24*60*60);
-            }
-
             //将登陆信息放入会话
-            req.getSession().setAttribute(ConstantUtils.SESSION_USER, user);
-
+            req.getSession().setAttribute(ConstantUtils.SESSION_USER, tbUser);
+            //重定向到首页
             return "redirect:/main";
         }
 

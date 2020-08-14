@@ -71,4 +71,13 @@
         WHERE
           a.username LIKE CONCAT('%',#{username},'%')
     </select>
+
+    <select id="getByEmail" resultType="TbUser">
+        SELECT
+          <include refid="tbUserColumns"/>
+        FROM
+          tb_user AS a
+        WHERE
+          a.email = #{email}
+    </select>
 </mapper>
