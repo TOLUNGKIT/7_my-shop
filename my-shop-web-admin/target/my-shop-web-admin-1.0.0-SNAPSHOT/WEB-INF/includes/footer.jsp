@@ -21,7 +21,16 @@
 
 <!-- Slimscroll -->
 <script src="/static/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- jQuery Validation Plugin - v1.14.0 -->
+<script src="/static/assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+<script src="/static/assets/plugins/jquery-validation/js/additional-methods.min.js"></script>
+<script src="/static/assets/plugins/jquery-validation/js/localization/messages_zh.min.js"></script>
+
 <!-- FastClick -->
 <script src="/static/assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/assets/js/adminlte.min.js"></script>
+
+<!-- app -->
+<script src="/static/assets/app/validate.js"></script>
