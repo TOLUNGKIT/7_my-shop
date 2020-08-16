@@ -51,13 +51,15 @@
                             </div>
 
                             <div class="box-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="搜索">
+                                <form action="/user/search" method="post">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="keyword" class="form-control pull-right" placeholder="搜索">
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -74,7 +76,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${tbUser}" var="tbUser">
+                                <c:forEach items="${tbUsers}" var="tbUser">
                                     <tr>
                                         <td>${tbUser.id}</td>
                                         <td>${tbUser.username}</td>
@@ -87,7 +89,7 @@
                                             <a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>
                                         </td>
                                     </tr>
-                                    </c:forEach>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>

@@ -50,7 +50,7 @@ public class UserController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model){
         List<TbUser> tbUsers = tbUserService.selectAll();
-        model.addAttribute("tbUser",tbUsers);
+        model.addAttribute("tbUsers",tbUsers);
         return "user_list";
     }
 
@@ -83,5 +83,18 @@ public class UserController {
             model.addAttribute("baseResult",baseResult);
             return "user_form";
         }
+    }
+
+    /**
+     * 搜索
+     * @param keyword
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public String search(String keyword, Model model){
+        List<TbUser> tbUsers = tbUserService.search(keyword);
+        model.addAttribute("tbUsers", tbUsers);
+        return "user_list";
     }
 }
