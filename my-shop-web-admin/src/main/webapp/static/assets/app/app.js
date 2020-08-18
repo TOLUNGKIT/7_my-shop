@@ -25,7 +25,7 @@ var App = function () {
      */
     var handlerCheckboxAll = function () {
         _masterCheckbox.on("ifClicked", function (e) {
-            console.log(e.target.checked);
+            //console.log(e.target.checked);
             //返回true 表示未选中
             if(e.target.checked){
                 _checkbox.iCheck("uncheck");

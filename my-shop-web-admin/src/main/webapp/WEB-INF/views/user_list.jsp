@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,54 @@
                         </div>
                     </c:if>
 
+                    <div class="box box-info box-info-search" style="display: none;">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">高级搜索</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form:form cssClass="form-horizontal" action="/user/search" method="post" modelAttribute="tbUser">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-4 control-label">姓名</label>
+
+                                            <div class="col-sm-8">
+                                                <form:input path="username" cssClass="form-control" placeholder="姓名"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-4 control-label">邮箱</label>
+
+                                            <div class="col-sm-8">
+                                                <form:input path="email" cssClass="form-control" placeholder="邮箱"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="phone" class="col-sm-4 control-label">手机</label>
+
+                                            <div class="col-sm-8">
+                                                <form:input path="phone" cssClass="form-control" placeholder="手机"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-info pull-right">搜索</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form:form>
+                    </div>
+
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">用户列表</h3>
@@ -47,53 +96,13 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-xs-12">
                                     <a href="/user/form" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> 删除</a>&nbsp;&nbsp;&nbsp;
+                                    <a href="#" type="button" class="btn btn-default" onclick="deleteMulti();"><i class="fa fa-trash-o"></i> 删除</a>&nbsp;&nbsp;&nbsp;
                                     <a href="#" type="button" class="btn btn-default"><i class="fa fa-download"></i> 导入</a>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>
+                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-primary" onclick="$('.box-info-search').css('display')=='none' ? $('.box-info-search').show('fast') : $('.box-info-search').hide('fast')"><i class="fa fa-search"></i> 搜索</button>
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-top: 20px;">
-                                <form:form cssClass="form-horizontal" action="/user/search" method="post" modelAttribute="tbUser">
-                                    <div class="row">
-                                        <div class="col-xs-3">
-                                            <div class="form-group">
-                                                <label for="username" class="col-sm-2 control-label">姓名</label>
-
-                                                <div class="col-sm-8">
-                                                    <form:input path="username" cssClass="form-control" placeholder="姓名"/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-3">
-                                            <div class="form-group">
-                                                <label for="email" class="col-sm-2 control-label">邮箱</label>
-
-                                                <div class="col-sm-8">
-                                                    <form:input path="email" cssClass="form-control" placeholder="邮箱"/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-3">
-                                            <div class="form-group">
-                                                <label for="phone" class="col-sm-2 control-label">手机</label>
-
-                                                <div class="col-sm-8">
-                                                    <form:input path="phone" cssClass="form-control" placeholder="手机"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="padding-right: 70px;">
-                                        <div class="col-xs-12">
-                                            <button type="submit" class="btn btn-info pull-right">搜索</button>
-                                        </div>
-                                    </div>
-                                </form:form>
-                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive no-padding">
@@ -141,11 +150,29 @@
 
 <jsp:include page="../includes/footer.jsp" />
 
+<sys:modal message="第一个模态框" opts="confirm" url="/user/delete"/>
+
 <script>
-    $(function () {
+    /**
+     * 批量删除
+     */
+    function deleteMulti() {
+        //定义一个存放 Id 的数组
+        var idArray = new Array();
+
+        // 将选中元素的ID 放入数组中
         var _checkbox = App.getCheckbox();
-        console.log("checkbox的数量：" + _checkbox.length);
-    })
+        _checkbox.each(function () {
+            var _id = $(this).attr("id");
+            if(_id != null && _id != "undefined" && $(this).is(":checked")){
+                idArray.push(_id);
+            }
+        });
+
+        if(idArray.length === 0){
+            $("#modal-default").modal("show");
+        }
+    }
 </script>
 
 </body>
