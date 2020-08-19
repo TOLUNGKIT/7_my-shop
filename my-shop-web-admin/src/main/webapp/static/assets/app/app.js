@@ -92,7 +92,15 @@ var App = function () {
                         "dataType" : "JSON",
                         "success" : function (data) {
                             if(data.status === 200){
-                                window.location.reload();
+                                $(".modal-footer .btn-primary").unbind("click");
+                                $(".modal-footer .btn-primary").bind("click", function () {
+                                    $("#modal-default").modal("hide");
+                                });
+                                $("#modal-message").html(data.message);
+                                $("#modal-default").modal("show");
+                                $("#modal-default").on('hide.bs.modal', function () {
+                                    window.location.reload();
+                                });
                             }
 
                             else {
@@ -107,7 +115,6 @@ var App = function () {
                         }
                     });
                 },500);
-
             }
         }
     };
