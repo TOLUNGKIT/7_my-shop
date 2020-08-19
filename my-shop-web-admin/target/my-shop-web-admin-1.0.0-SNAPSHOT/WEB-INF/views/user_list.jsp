@@ -96,7 +96,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-xs-12">
                                     <a href="/user/form" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" type="button" class="btn btn-default" onclick="deleteMulti();"><i class="fa fa-trash-o"></i> 删除</a>&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-default" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
                                     <a href="#" type="button" class="btn btn-default"><i class="fa fa-download"></i> 导入</a>&nbsp;&nbsp;&nbsp;
                                     <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>&nbsp;&nbsp;&nbsp;
                                     <button type="button" class="btn btn-primary" onclick="$('.box-info-search').css('display')=='none' ? $('.box-info-search').show('fast') : $('.box-info-search').hide('fast')"><i class="fa fa-search"></i> 搜索</button>
@@ -150,30 +150,10 @@
 
 <jsp:include page="../includes/footer.jsp" />
 
-<sys:modal message="第一个模态框" opts="confirm" url="/user/delete"/>
+<!-- 自定义模态框 -->
+<sys:modal />
 
-<script>
-    /**
-     * 批量删除
-     */
-    function deleteMulti() {
-        //定义一个存放 Id 的数组
-        var idArray = new Array();
 
-        // 将选中元素的ID 放入数组中
-        var _checkbox = App.getCheckbox();
-        _checkbox.each(function () {
-            var _id = $(this).attr("id");
-            if(_id != null && _id != "undefined" && $(this).is(":checked")){
-                idArray.push(_id);
-            }
-        });
-
-        if(idArray.length === 0){
-            $("#modal-default").modal("show");
-        }
-    }
-</script>
 
 </body>
 </html>

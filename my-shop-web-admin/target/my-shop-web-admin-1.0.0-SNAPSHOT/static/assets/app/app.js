@@ -1,7 +1,11 @@
 var App = function () {
 
+    // iCheck
     var _masterCheckbox;
     var _checkbox;
+
+    //用于存放 ID 的数组
+    var _idArray;
 
     /**
      * 私有方法，初始化 ICheck
@@ -36,6 +40,76 @@ var App = function () {
                 _checkbox.iCheck("check");
             }
         });
+
+
+    };
+
+    /**
+     * 批量删除
+     */
+    var handlerDeleteMulti = function (url) {
+        _idArray = new Array();
+
+        // 将选中元素的ID 放入数组中
+        _checkbox.each(function () {
+            var _id = $(this).attr("id");
+            if(_id != null && _id != "undefined" && $(this).is(":checked")){
+                _idArray.push(_id);
+            }
+        });
+
+        if(_idArray.length === 0){
+            $("#modal-message").html("您还没有选择任何数据项，请至少选择一项");
+        }
+        else {
+            $("#modal-message").html("您确定删除数据项吗？");
+        }
+        $("#modal-default").modal("show");
+
+        $(".modal-footer .btn-primary").bind("click", function () {
+            del()
+        });
+
+        /**
+         * 当前私有函数的私有函数，删除数据
+         */
+        function del() {
+            $("#modal-default").modal("hide");
+
+            // 如果没有选择数据项的处理
+            if(_idArray.length === 0){
+                //...
+
+            }
+
+            // 否则删除操作
+            else{
+                setTimeout(function () {
+                    $.ajax({
+                        "url" : url,
+                        "type" : "POST",
+                        "data" : {"ids" : _idArray.toString()},
+                        "dataType" : "JSON",
+                        "success" : function (data) {
+                            if(data.status === 200){
+                                window.location.reload();
+                            }
+
+                            else {
+                                $(".modal-footer .btn-primary").unbind("click");
+                                $(".modal-footer .btn-primary").bind("click", function () {
+                                    $("#modal-default").modal("hide");
+                                });
+
+                                $("#modal-message").html(data.message);
+                                $("#modal-default").modal("show");
+                            }
+                        }
+                    });
+                },500);
+
+            }
+        }
     };
 
     /**
@@ -49,6 +123,10 @@ var App = function () {
 
         getCheckbox: function () {
             return _checkbox;
+        },
+
+        deleteMulti: function (url) {
+            handlerDeleteMulti(url);
         }
     }
 }();
