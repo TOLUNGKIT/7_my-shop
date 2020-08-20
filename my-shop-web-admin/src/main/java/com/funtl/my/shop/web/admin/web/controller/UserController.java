@@ -52,9 +52,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list(Model model){
-        List<TbUser> tbUsers = tbUserService.selectAll();
-        model.addAttribute("tbUsers",tbUsers);
+    public String list(){
         return "user_list";
     }
 
@@ -142,5 +140,15 @@ public class UserController {
         PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw);
 
         return pageInfo;
+    }
+
+    /**
+     * 显示用户详情
+     * @param tbUser
+     * @return
+     */
+    @RequestMapping(value = "detail", method = RequestMethod.GET)
+    public String detail(TbUser tbUser){
+        return "user_detail";
     }
 }

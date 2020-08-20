@@ -166,8 +166,9 @@
                 {"data": "updated"},
                 {
                     "data": function (row, type, val, meta) {
-                        return '<a href="#" type="button" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;\n' +
-                            '<a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;\n' +
+                        var detailUrl = "/user/detail?id=" + row.id;
+                        return '<button type="button" class="btn btn-default" onclick="App.showDetail(\''+detailUrl+'\');"><i class="fa fa-search"></i> 查看</button>&nbsp;&nbsp;&nbsp;\n' +
+                            '<a href="/user/form?id='+row.id+'" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;\n' +
                             '<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                 }

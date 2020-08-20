@@ -66,7 +66,7 @@ var App = function () {
         }
         $("#modal-default").modal("show");
 
-        $(".modal-footer .btn-primary").bind("click", function () {
+        $("#btnModalOk").bind("click", function () {
             del()
         });
 
@@ -92,8 +92,8 @@ var App = function () {
                         "dataType" : "JSON",
                         "success" : function (data) {
                             if(data.status === 200){
-                                $(".modal-footer .btn-primary").unbind("click");
-                                $(".modal-footer .btn-primary").bind("click", function () {
+                                $("#btnModalOk").unbind("click");
+                                $("#btnModalOk").bind("click", function () {
                                     $("#modal-default").modal("hide");
                                 });
                                 $("#modal-message").html(data.message);
@@ -104,8 +104,8 @@ var App = function () {
                             }
 
                             else {
-                                $(".modal-footer .btn-primary").unbind("click");
-                                $(".modal-footer .btn-primary").bind("click", function () {
+                                $("#btnModalOk").unbind("click");
+                                $("#btnModalOk").bind("click", function () {
                                     $("#modal-default").modal("hide");
                                 });
 
@@ -168,6 +168,22 @@ var App = function () {
     };
 
     /**
+     * 查看详情
+     * @param url
+     */
+    var handlerShowDetail = function (url) {
+        $.ajax({
+            url : url,
+            type: "get",
+            dataType: "html",
+            success: function (data) {
+                $("#modal-detail-body").html(data);
+                $("#modal-detail").modal("show");
+            }
+        });
+    };
+
+    /**
      * 公共
      */
     return{
@@ -186,6 +202,10 @@ var App = function () {
 
         initDataTables: function (url, columns) {
             handlerInitDataTables(url, columns);
+        },
+
+        showDetail: function (url) {
+            handlerShowDetail(url);
         }
     }
 }();
