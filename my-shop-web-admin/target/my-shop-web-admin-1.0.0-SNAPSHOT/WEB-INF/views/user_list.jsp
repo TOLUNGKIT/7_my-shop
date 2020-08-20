@@ -92,21 +92,19 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">用户列表</h3>
-
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-xs-12">
-                                    <a href="/user/form" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>&nbsp;&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-default" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-download"></i> 导入</a>&nbsp;&nbsp;&nbsp;
-                                    <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>&nbsp;&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-primary" onclick="$('.box-info-search').css('display')=='none' ? $('.box-info-search').show('fast') : $('.box-info-search').hide('fast')"><i class="fa fa-search"></i> 搜索</button>
-                                </div>
-                            </div>
-
                         </div>
+
+                        <div class="box-body">
+                            <a href="/user/form" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-default" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
+                            <a href="#" type="button" class="btn btn-default"><i class="fa fa-download"></i> 导入</a>&nbsp;&nbsp;&nbsp;
+                            <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" onclick="$('.box-info-search').css('display')=='none' ? $('.box-info-search').show('fast') : $('.box-info-search').hide('fast')"><i class="fa fa-search"></i> 搜索</button>
+                        </div>
+
                         <!-- /.box-header -->
-                        <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover">
+                        <div class="box-body table-responsive">
+                            <table id="dataTable" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="minimal icheck_master"></th>
@@ -119,21 +117,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${tbUsers}" var="tbUser">
-                                    <tr>
-                                        <td><input id="${tbUser.id}" type="checkbox" class="minimal"></td>
-                                        <td>${tbUser.id}</td>
-                                        <td>${tbUser.username}</td>
-                                        <td>${tbUser.phone}</td>
-                                        <td>${tbUser.email}</td>
-                                        <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                        <td>
-                                            <a href="#" type="button" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;
-                                            <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;
-                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+<%--                                <c:forEach items="${tbUsers}" var="tbUser">--%>
+<%--                                    <tr>--%>
+<%--                                        <td><input id="${tbUser.id}" type="checkbox" class="minimal"></td>--%>
+<%--                                        <td>${tbUser.id}</td>--%>
+<%--                                        <td>${tbUser.username}</td>--%>
+<%--                                        <td>${tbUser.phone}</td>--%>
+<%--                                        <td>${tbUser.email}</td>--%>
+<%--                                        <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd HH:mm:ss" /></td>--%>
+<%--                                        <td>--%>
+<%--                                            <a href="#" type="button" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;--%>
+<%--                                            <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;--%>
+<%--                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                </c:forEach>--%>
                                 </tbody>
                             </table>
                         </div>
@@ -153,7 +151,69 @@
 <!-- 自定义模态框 -->
 <sys:modal />
 
-
+<script>
+    $(function () {
+        $("#dataTable").dataTable({
+            "paging": true,
+            "info": true,
+            "lengthChange": false,
+            "ordering": false,
+            "processing": true,
+            "searching": false,
+            "serverSide": true,
+            "deferRender": true,
+            "ajax": {
+                "url": "/user/page"
+            },
+            "columns": [
+                {
+                    "data": function (row, type, val, meta) {
+                        return '<input id="' + row.id + '" type="checkbox" class="minimal" />';
+                    }
+                },
+                {"data": "id"},
+                {"data": "username"},
+                {"data": "phone"},
+                {"data": "email"},
+                {"data": "updated"},
+                {
+                    "data": function (row, type, val, meta) {
+                        return '<a href="#" type="button" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;\n' +
+                                '<a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;\n' +
+                                '<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>';
+                    }
+                }
+            ],
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "drawCallback": function( settings ) {
+                App.init();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
