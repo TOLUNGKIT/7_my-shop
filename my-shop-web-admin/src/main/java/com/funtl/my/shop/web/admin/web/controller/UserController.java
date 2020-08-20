@@ -1,6 +1,7 @@
 package com.funtl.my.shop.web.admin.web.controller;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
+import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.domain.TbUser;
 import com.funtl.my.shop.web.admin.service.TbUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 用户管理
@@ -120,7 +119,6 @@ public class UserController {
         else {
             baseResult = BaseResult.fail("删除用户失败");
         }
-
         return baseResult;
     }
 
@@ -131,8 +129,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "page", method = RequestMethod.GET)
-    public Map<String, Object> page(HttpServletRequest request){
-        Map<String, Object> result = new HashMap<>();
+    public PageInfo<TbUser> page(HttpServletRequest request){
         String strDraw = request.getParameter("draw");
         String strStart = request.getParameter("start");
         String strLength = request.getParameter("length");
@@ -142,14 +139,8 @@ public class UserController {
         int length = strDraw == null ? 10 : Integer.parseInt(strLength);
 
         //封装 Datetables 需要的结果
-        List<TbUser> tbUsers = tbUserService.page(start,length);
-        int count = tbUserService.count();
-        result.put("draw",draw);
-        result.put("recordsTotal",count);
-        result.put("recordsFiltered",count);
-        result.put("data",tbUsers);
-        result.put("error","");
+        PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw);
 
-        return result;
+        return pageInfo;
     }
 }

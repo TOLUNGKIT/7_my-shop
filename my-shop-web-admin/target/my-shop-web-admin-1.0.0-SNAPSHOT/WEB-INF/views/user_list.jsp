@@ -153,19 +153,7 @@
 
 <script>
     $(function () {
-        $("#dataTable").dataTable({
-            "paging": true,
-            "info": true,
-            "lengthChange": false,
-            "ordering": false,
-            "processing": true,
-            "searching": false,
-            "serverSide": true,
-            "deferRender": true,
-            "ajax": {
-                "url": "/user/page"
-            },
-            "columns": [
+        var _columns = [
                 {
                     "data": function (row, type, val, meta) {
                         return '<input id="' + row.id + '" type="checkbox" class="minimal" />';
@@ -179,39 +167,12 @@
                 {
                     "data": function (row, type, val, meta) {
                         return '<a href="#" type="button" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;\n' +
-                                '<a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;\n' +
-                                '<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>';
+                            '<a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;\n' +
+                            '<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</a>';
                     }
                 }
-            ],
-            "language": {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
-            },
-            "drawCallback": function( settings ) {
-                App.init();
-            }
-        });
+            ];
+        App.initDataTables("/user/page", _columns);
     });
 </script>
 

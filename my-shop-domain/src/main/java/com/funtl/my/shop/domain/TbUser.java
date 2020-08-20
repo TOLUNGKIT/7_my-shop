@@ -1,29 +1,17 @@
 package com.funtl.my.shop.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.funtl.my.shop.commons.persistence.BaseEntity;
 
 /**
  * @author: TOLUNGKIT
  * @version: 1.0.0
  * @date: 2020-08-13 20:42
  **/
-public class TbUser implements Serializable {
-    private Long id;
+public class TbUser extends BaseEntity {
     private String username;
     private String password;
     private String phone;
     private String email;
-    private Date created;
-    private Date updated;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -55,21 +43,5 @@ public class TbUser implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 }
