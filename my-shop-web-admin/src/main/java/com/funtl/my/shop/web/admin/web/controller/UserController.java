@@ -137,4 +137,24 @@ public class UserController {
     public String detail(TbUser tbUser){
         return "user_detail";
     }
+
+    /**
+     * 通过 ID 删除单条用户数据
+     * @param tbUser
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "del", method = RequestMethod.GET)
+    public BaseResult del(TbUser tbUser){
+        Long id = tbUser.getId();
+        BaseResult baseResult = null;
+        if(id != null){
+            tbUserService.delete(id);
+            baseResult = BaseResult.success("删除用户成功");
+        }
+        else {
+            baseResult = BaseResult.fail("删除用户失败");
+        }
+        return baseResult;
+    }
 }

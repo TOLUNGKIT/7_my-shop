@@ -102,12 +102,8 @@ var App = function () {
                             if(data.status === 200){
                                 //刷新页面
                                 $("#btnModalOk").bind("click", function () {
-                                    // $("#modal-default").modal("hide");
                                     window.location.reload();
                                 });
-                                // $("#modal-default").on('hide.bs.modal', function () {
-                                //     window.location.reload();
-                                // });
                             }
 
                             //请求失败
@@ -196,6 +192,53 @@ var App = function () {
     };
 
     /**
+     * 通过 id 删除单条用户数据
+     * @param url
+     */
+    var handlerDelete = function (url) {
+        $("#modal-message").html("您确定删除数据项吗？");
+        $("#modal-default").modal("show");
+        //如果用户选择了数据项则调用删除方法
+        $("#btnModalOk").bind("click", function () {
+            del()
+        });
+
+        function del(){
+            $("#modal-default").modal("hide");
+
+            $.ajax({
+                url : url,
+                type : "get",
+                dataType: "JSON",
+                success: function (data) {
+                    //请求成功后，无论是成功还是失败都需要弹出模态框进行提示，所以这里需要先解绑原来的 click 事件
+                    $("#btnModalOk").unbind("click");
+
+                    //请求成功
+                    if(data.status === 200){
+                        //刷新页面
+                        $("#btnModalOk").bind("click", function () {
+                            window.location.reload();
+                        });
+                    }
+
+                    //请求失败
+                    else {
+                        //确定按钮的事件改为隐藏模态框
+                        $("#btnModalOk").bind("click", function () {
+                            $("#modal-default").modal("hide");
+                        });
+                    }
+
+                    //因为无论如何都需要提示信息，所以这里的模态框是必须要用的
+                    $("#modal-message").html(data.message);
+                    $("#modal-default").modal("show");
+                }
+            });
+        }
+    };
+
+    /**
      * 公共
      */
     return{
@@ -231,6 +274,10 @@ var App = function () {
          */
         showDetail: function (url) {
             handlerShowDetail(url);
+        },
+
+        del: function (url) {
+            handlerDelete(url);
         }
     }
 }();
