@@ -46,16 +46,16 @@
                             <h3 class="box-title">高级搜索</h3>
                         </div>
                         <!-- /.box-header -->
+
                         <!-- form start -->
-                        <form:form cssClass="form-horizontal" action="/user/search" method="post" modelAttribute="tbUser">
-                            <div class="box-body">
-                                <div class="row">
+                        <div class="box-body">
+                                <div class="row form-horizontal">
                                     <div class="col-xs-12 col-sm-3">
                                         <div class="form-group">
                                             <label for="username" class="col-sm-4 control-label">姓名</label>
 
                                             <div class="col-sm-8">
-                                                <form:input path="username" cssClass="form-control" placeholder="姓名"/>
+                                                <input id="username" class="form-control" placeholder="姓名"/>
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
                                             <label for="email" class="col-sm-4 control-label">邮箱</label>
 
                                             <div class="col-sm-8">
-                                                <form:input path="email" cssClass="form-control" placeholder="邮箱"/>
+                                                <input id="email" class="form-control" placeholder="邮箱"/>
                                             </div>
                                         </div>
                                     </div>
@@ -75,18 +75,18 @@
                                             <label for="phone" class="col-sm-4 control-label">手机</label>
 
                                             <div class="col-sm-8">
-                                                <form:input path="phone" cssClass="form-control" placeholder="手机"/>
+                                                <input id="phone" class="form-control" placeholder="手机"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">搜索</button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form:form>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="button" class="btn btn-info pull-right" onclick="search();">搜索</button>
+                        </div>
+                        <!-- /.box-footer -->
                     </div>
 
                     <div class="box">
@@ -152,6 +152,8 @@
 <sys:modal />
 
 <script>
+    var _dataTable;
+
     $(function () {
         var _columns = [
                 {
@@ -173,8 +175,23 @@
                     }
                 }
             ];
-        App.initDataTables("/user/page", _columns);
+        _dataTable = App.initDataTables("/user/page", _columns);
     });
+    
+    function search() {
+        var username = $("#username").val();
+        var phone = $("#phone").val();
+        var email = $("#email").val();
+
+        var param = {
+            "username" : username,
+            "phone" : phone,
+            "email" : email
+        };
+
+        _dataTable.settings()[0].ajax.data = param;
+        _dataTable.ajax.reload();
+    }
 </script>
 
 </body>

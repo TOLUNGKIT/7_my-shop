@@ -79,5 +79,5 @@ public interface TbUserDao {
      * 查询总笔数
      * @return
      */
-    int count();
+    int count(TbUser tbUser);
 }
