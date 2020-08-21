@@ -39,14 +39,11 @@ public interface TbUserDao {
      */
     TbUser getById(Long id);
 
-    void updated(TbUser tbUser);
-
     /**
-     * 根据用户名进行模糊匹配
-     * @param username
-     * @return
+     * 更新
+     * @param tbUser
      */
-    List<TbUser> selectByUsername(String username);
+    void updated(TbUser tbUser);
 
     /**
      * 根据邮箱查询用户信息
@@ -54,13 +51,6 @@ public interface TbUserDao {
      * @return
      */
     TbUser getByEmail(String Email);
-
-    /**
-     * 搜索
-     * @param tbUser
-     * @return
-     */
-    List<TbUser> search(TbUser tbUser);
 
     /**
      * 批量删除

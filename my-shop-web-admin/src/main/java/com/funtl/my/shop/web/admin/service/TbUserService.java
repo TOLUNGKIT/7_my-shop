@@ -12,17 +12,37 @@ import java.util.List;
  * @date: 2020-08-13 20:51
  **/
 public interface TbUserService {
+    /**
+     * 查询全部
+     * @return
+     */
     public List<TbUser> selectAll();
 
+    /**
+     * 保存用户信息
+     * @param tbUser
+     * @return
+     */
     BaseResult save(TbUser tbUser);
 
+    /**
+     * 删除用户信息
+     * @param id
+     */
     void delete(Long id);
 
+    /**
+     * 根据 ID 获取用户信息
+     * @param id
+     * @return
+     */
     TbUser getById(Long id);
 
+    /**
+     * 更新用户信息
+     * @param tbUser
+     */
     void update(TbUser tbUser);
-
-    List<TbUser> selectByUsername(String name);
 
     /**
      * 用户登录
@@ -31,13 +51,6 @@ public interface TbUserService {
      * @return
      */
     TbUser login(String email, String password);
-
-    /**
-     * 搜索功能
-     * @param tbUser
-     * @return
-     */
-    List<TbUser> search(TbUser tbUser);
 
     /**
      * 批量删除

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 用户管理
@@ -85,19 +84,6 @@ public class UserController {
             model.addAttribute("baseResult",baseResult);
             return "user_form";
         }
-    }
-
-    /**
-     * 搜索
-     * @param tbUser
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "search", method = RequestMethod.POST)
-    public String search(TbUser tbUser, Model model){
-        List<TbUser> tbUsers = tbUserService.search(tbUser);
-        model.addAttribute("tbUsers", tbUsers);
-        return "user_list";
     }
 
     /**

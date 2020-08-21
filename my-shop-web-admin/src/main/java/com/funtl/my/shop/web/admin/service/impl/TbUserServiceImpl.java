@@ -75,11 +75,6 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public List<TbUser> selectByUsername(String name) {
-        return tbUserDao.selectByUsername(name);
-    }
-
-    @Override
     public TbUser login(String email, String password) {
         TbUser tbUser = tbUserDao.getByEmail(email);
         if(tbUser != null){
@@ -92,12 +87,6 @@ public class TbUserServiceImpl implements TbUserService {
             }
         }
         return null;
-    }
-
-    @Override
-    public List<TbUser> search(TbUser tbUser) {
-
-        return tbUserDao.search(tbUser);
     }
 
     @Override
