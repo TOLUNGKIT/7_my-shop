@@ -191,6 +191,10 @@ var App = function () {
         });
     };
 
+    /**
+     * 通过 id 删除单条用户数据
+     * @param url
+     */
     var handlerDelete = function (url) {
         $("#modal-message").html("您确定删除数据项吗？");
         $("#modal-default").modal("show");
