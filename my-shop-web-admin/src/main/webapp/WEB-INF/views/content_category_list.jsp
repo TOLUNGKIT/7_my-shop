@@ -8,6 +8,7 @@
 <head>
     <title> 我的商城 | 内容管理 </title>
     <jsp:include page="../includes/header.jsp"/>
+    <link rel="stylesheet" href="/static/assets/plugins/treeTable/themes/vsStyle/treeTable.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -48,17 +49,34 @@
 
                         <div class="box-body">
                             <a href="#" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
                             <a href="#" type="button" class="btn btn-default"><i class="fa fa-download"></i> 导入</a>&nbsp;&nbsp;&nbsp;
                             <a href="#" type="button" class="btn btn-default"><i class="fa fa-upload"></i> 导出</a>&nbsp;&nbsp;&nbsp;
                         </div>
 
                         <!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <table id="dataTable" class="table table-hover">
+                            <table id="treeTable" class="table table-hover">
                                 <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>名称</th>
+                                    <th>排序</th>
+                                    <th>操作</th>
+                                </tr>
                                 </thead>
                                 <tbody>
+                                <c:forEach items="${tbContentCategories}" var="tbContentCategory">
+                                    <tr id="${tbContentCategory.id}" pId="${tbContentCategory.parentId}">
+                                        <td>${tbContentCategory.id}</td>
+                                        <td>${tbContentCategory.name}</td>
+                                        <td>${tbContentCategory.sortOrder}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;
+                                            <button href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
+                                            <a href="#" class="btn btn-default"><i class="fa fa-plus"></i> 新增下级菜单</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -74,8 +92,19 @@
 </div>
 
 <jsp:include page="../includes/footer.jsp" />
+<script src="/static/assets/plugins/treeTable/jquery.treeTable.min.js"></script>
 
 <!-- 自定义模态框 -->
 <sys:modal />
+
+<script>
+    $(function (){
+        $("#treeTable").treeTable({
+            column: 1,
+            expandLevel: 2
+
+        });
+    });
+</script>
 </body>
 </html>
