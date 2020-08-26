@@ -175,6 +175,41 @@ var App = function () {
     };
 
     /**
+     * 初始化 zTree
+     * @param url
+     * @param autoParam
+     * @param callback
+     */
+    var handlerInitZTree = function (url, autoParam, callback){
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            async: {
+                enable: true,
+                url: url,
+                autoParam: autoParam
+            }
+        };
+
+        $.fn.zTree.init($("#myTree"), setting);
+
+        $("#btnModalOk").bind("click",function (){
+            var zTree = $.fn.zTree.getZTreeObj("myTree");
+            var nodes = zTree.getSelectedNodes();
+
+            // 未选择
+            if (nodes.length == 0){
+                alert("请选择一个节点");
+            }
+            // 已选择
+            else {
+                callback(nodes);
+            }
+        });
+    };
+
+    /**
      * 查看详情
      * @param url
      */
@@ -266,6 +301,16 @@ var App = function () {
          */
         initDataTables: function (url, columns) {
             return handlerInitDataTables(url, columns);
+        },
+
+        /**
+         * 初始化 zTree
+         * @param url
+         * @param autoParam
+         * @param callback
+         */
+        initZTree: function (url, autoParam, callback){
+            handlerInitZTree(url, autoParam, callback);
         },
 
         /**

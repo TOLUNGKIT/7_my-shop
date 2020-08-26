@@ -1,5 +1,6 @@
 package com.funtl.my.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.funtl.my.shop.commons.persistence.BaseEntity;
 
 /**
@@ -12,6 +13,11 @@ public class TbContentCategory extends BaseEntity {
     private String name;
     private Integer status;
     private Integer sortOrder;
+
+    /**
+     * 换成 Json 需要的别名，而不需要改代码
+     */
+    @JsonProperty(value = "isParent")
     private Boolean isParent;
 
     public Long getParentId() {
