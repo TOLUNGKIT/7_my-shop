@@ -46,75 +46,35 @@
                     <!-- Horizontal Form -->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">${tbContent.id == null ? "新增" : "编辑"}内容</h3>
+                            <h3 class="box-title">${tbContentCategory.id == null ? "新增" : "编辑"}内容</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form:form id="inputForm" cssClass="form-horizontal" action="/content/save" method="post" modelAttribute="tbContent">
+                        <form:form id="inputForm" cssClass="form-horizontal" action="/content/category/save" method="post" modelAttribute="tbContentCategory">
                             <form:hidden path="id" />
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="categoryId" class="col-sm-2 control-label">父级类目</label>
+                                    <label for="parentId" class="col-sm-2 control-label">父级类目</label>
 
                                     <div class="col-sm-10">
-                                        <form:hidden path="categoryId" />
-                                        <input id="categoryName" class="form-control required" placeholder="请选择" readonly="true" data-toggle="modal" data-target="#modal-default" />
+                                        <form:hidden path="parentId" />
+                                        <input id="parentName" class="form-control required" placeholder="请选择" readonly="true" data-toggle="modal" data-target="#modal-default" />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title" class="col-sm-2 control-label">标题</label>
+                                    <label for="name" class="col-sm-2 control-label">分类名称</label>
 
                                     <div class="col-sm-10">
-                                        <form:input path="title" class="form-control required" placeholder="标题"/>
+                                        <form:input path="name" class="form-control required" placeholder="分类名称"  />
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="subTitle" class="col-sm-2 control-label">子标题</label>
+                                    <label for="name" class="col-sm-2 control-label">分类排序</label>
 
                                     <div class="col-sm-10">
-                                        <form:input path="subTitle" class="form-control required" placeholder="子标题"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="titleDesc" class="col-sm-2 control-label">标题描述</label>
-
-                                    <div class="col-sm-10">
-                                        <form:input path="titleDesc" class="form-control required" placeholder="标题描述"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="url" class="col-sm-2 control-label">链接</label>
-
-                                    <div class="col-sm-10">
-                                        <form:input path="url" class="form-control required" placeholder="链接"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="pic" class="col-sm-2 control-label">图片1</label>
-
-                                    <div class="col-sm-10">
-                                        <form:input path="pic" class="form-control required" placeholder="图片1"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="pic2" class="col-sm-2 control-label">图片2</label>
-
-                                    <div class="col-sm-10">
-                                        <form:input path="pic2" class="form-control required" placeholder="图片2"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="content" class="col-sm-2 control-label">详情</label>
-
-                                    <div class="col-sm-10">
-                                        <form:input path="content" class="form-control required" placeholder="详情"/>
+                                        <form:input path="sortOrder" class="form-control required" placeholder="分类排序"  />
                                     </div>
                                 </div>
                             </div>
@@ -146,8 +106,8 @@
     $(function (){
         App.initZTree("/content/category/tree/data", ["id"], function (nodes){
             var node = nodes[0];
-            $("#categoryId").val(node.id);
-            $("#categoryName").val(node.name);
+            $("#parentId").val(node.id);
+            $("#parentName").val(node.name);
             $("#modal-default").modal("hide");
         });
     });

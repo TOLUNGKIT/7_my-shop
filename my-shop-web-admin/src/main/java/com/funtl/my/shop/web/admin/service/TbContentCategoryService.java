@@ -1,5 +1,6 @@
 package com.funtl.my.shop.web.admin.service;
 
+import com.funtl.my.shop.commons.dto.BaseResult;
 import com.funtl.my.shop.domain.TbContentCategory;
 
 import java.util.List;
@@ -19,4 +20,21 @@ public interface TbContentCategoryService {
      * @return
      */
     List<TbContentCategory> selectByPid(Long pid);
+
+
+
+    /**
+     * 根据id查询商品信息
+     * @param id
+     * @return
+     */
+    TbContentCategory getById(Long id);
+
+
+    /**
+     * 新增
+     * @param tbContentCategory
+     */
+    BaseResult save(TbContentCategory tbContentCategory);
+
 }

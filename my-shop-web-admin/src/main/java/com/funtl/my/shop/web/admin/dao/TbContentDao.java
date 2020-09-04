@@ -31,7 +31,6 @@ public interface TbContentDao {
      */
     void delete(Long id);
 
-
     /**
      * 根据id查询商品信息
      * @param id

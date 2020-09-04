@@ -60,6 +60,6 @@
 <script src="/static/assets/js/adminlte.min.js"></script>
 
 <!-- app -->
-<script src="/static/assets/app/validate.js"></script>
+<%--<script src="/static/assets/app/validate.js"></script>--%>
 <script src="/static/assets/app/app.js"></script>
 <script src="/static/assets/app/datatime.js"></script>
