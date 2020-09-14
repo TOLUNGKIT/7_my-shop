@@ -2,11 +2,10 @@ package com.funtl.my.shop.web.admin.service.impl;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
 import com.funtl.my.shop.commons.dto.PageInfo;
-import com.funtl.my.shop.commons.utils.RegexpUtils;
+import com.funtl.my.shop.commons.validator.BeanValidator;
 import com.funtl.my.shop.domain.TbContent;
 import com.funtl.my.shop.web.admin.dao.TbContentDao;
 import com.funtl.my.shop.web.admin.service.TbContentService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +32,15 @@ public class TbContentServiceImpl implements TbContentService {
 
     @Override
     public BaseResult save(TbContent tbContent) {
-        BaseResult baseResult = checkTbContent(tbContent);
+        String validator = BeanValidator.validator(tbContent);
 
-        //通过验证
-        if(baseResult.getStatus() == BaseResult.STATUS_SUCCESS){
+        //验证不通过
+        if(validator != null){
+            return BaseResult.fail(validator);
+        }
 
+        //验证通过
+        else{
             tbContent.setUpdated(new Date());
 
             // 新增商品
@@ -50,10 +53,9 @@ public class TbContentServiceImpl implements TbContentService {
             else{
                 tbContentDao.updated(tbContent);
             }
-            baseResult.setMessage("保存商品信息成功");
-        }
 
-        return baseResult;
+            return BaseResult.success("保存商品信息成功");
+        }
     }
 
     @Override
@@ -100,38 +102,38 @@ public class TbContentServiceImpl implements TbContentService {
     }
 
     /**
-     * 商品信息的有效性验证
+     * 商品信息的有效性验证（已使用 Spring validation替代次方法）
      * @param tbContent
      */
-    private BaseResult checkTbContent(TbContent tbContent){
-
-        BaseResult baseResult = BaseResult.success();
-
-        //非空验证
-        if(tbContent.getCategoryId() == null){
-            baseResult = BaseResult.fail("内容的所属分类不能为空，请重新输入" );
-        }
-        else if (StringUtils.isBlank(tbContent.getTitle())) {
-            baseResult = BaseResult.fail("标题不能为空，请重新输入" );
-        }
-        else if (StringUtils.isBlank(tbContent.getSubTitle())) {
-            baseResult = BaseResult.fail("子标题不能为空，请重新输入");
-        }
-        else if (StringUtils.isBlank(tbContent.getTitleDesc())) {
-            baseResult = BaseResult.fail("标题描述不能为空，请重新输入");
-        }
-        else if (StringUtils.isBlank(tbContent.getUrl())) {
-            baseResult = BaseResult.fail("地址不能为空，请重新输入");
-        }
-        else if (!RegexpUtils.checkPhone(tbContent.getPic())) {
-            baseResult = BaseResult.fail("相片不能为空，请重新输入" );
-        }
-        else if (!RegexpUtils.checkPhone(tbContent.getPic2())) {
-            baseResult = BaseResult.fail("相片不能为空，请重新输入" );
-        }
-        else if (!RegexpUtils.checkPhone(tbContent.getContent())) {
-            baseResult = BaseResult.fail("内容不能为空，请重新输入" );
-        }
-        return baseResult;
-    }
+//    private BaseResult checkTbContent(TbContent tbContent){
+//
+//        BaseResult baseResult = BaseResult.success();
+//
+//        //非空验证
+//        if(tbContent.getCategoryId() == null){
+//            baseResult = BaseResult.fail("内容的所属分类不能为空，请重新输入" );
+//        }
+//        else if (StringUtils.isBlank(tbContent.getTitle())) {
+//            baseResult = BaseResult.fail("标题不能为空，请重新输入" );
+//        }
+//        else if (StringUtils.isBlank(tbContent.getSubTitle())) {
+//            baseResult = BaseResult.fail("子标题不能为空，请重新输入");
+//        }
+//        else if (StringUtils.isBlank(tbContent.getTitleDesc())) {
+//            baseResult = BaseResult.fail("标题描述不能为空，请重新输入");
+//        }
+//        else if (StringUtils.isBlank(tbContent.getUrl())) {
+//            baseResult = BaseResult.fail("地址不能为空，请重新输入");
+//        }
+//        else if (!RegexpUtils.checkPhone(tbContent.getPic())) {
+//            baseResult = BaseResult.fail("相片不能为空，请重新输入" );
+//        }
+//        else if (!RegexpUtils.checkPhone(tbContent.getPic2())) {
+//            baseResult = BaseResult.fail("相片不能为空，请重新输入" );
+//        }
+//        else if (!RegexpUtils.checkPhone(tbContent.getContent())) {
+//            baseResult = BaseResult.fail("内容不能为空，请重新输入" );
+//        }
+//        return baseResult;
+//    }
 }
