@@ -10,8 +10,9 @@
     <title> 我的商城 | 内容管理 </title>
     <jsp:include page="../includes/header.jsp"/>
     <link rel="stylesheet" href="/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css" />
-    <link rel="stylesheet" href="/static/assets/plugins/dropzone/dropzone.css"/>
-    <link rel="stylesheet" href="/static/assets/plugins/dropzone/min/basic.min.css"/>
+    <link rel="stylesheet" href="/static/assets/plugins/dropzone/dropzone.css" />
+    <link rel="stylesheet" href="/static/assets/plugins/dropzone/min/basic.min.css" />
+    <link rel="stylesheet" href="/static/assets/plugins/wangEditor/wangEditor.min.css" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -116,10 +117,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="content" class="col-sm-2 control-label">详情</label>
+                                    <label class="col-sm-2 control-label">详情</label>
 
                                     <div class="col-sm-10">
-                                        <form:textarea rows="5" path="content" class="form-control required" placeholder="详情"/>
+                                        <form:hidden path="content"/>
+<%--                                        <form:textarea rows="5" path="content" class="form-control required" placeholder="详情"/>--%>
+                                        <div id="editor">${tbContent.content}</div>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +130,7 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="button" class="btn btn-default" onclick="history.go(-1)">返回</button>
-                                <button type="submit" class="btn btn-info pull-right">提交</button>
+                                <button id="btnSubmit" type="submit" class="btn btn-info pull-right">提交</button>
                             </div>
                             <!-- /.box-footer -->
                         </form:form>
@@ -144,6 +147,7 @@
 
 <script src="/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script src="/static/assets/plugins/dropzone/min/dropzone.min.js"></script>
+<script src="/static/assets/plugins/wangEditor/wangEditor.min.js"></script>
 
 <!-- 自定义模态框 -->
 <sys:modal title="请选择" message="<ul id='myTree' class='ztree'></ul>" />
@@ -156,7 +160,27 @@
             $("#categoryName").val(node.name);
             $("#modal-default").modal("hide");
         });
+
+        initWangEditor();
     });
+
+    /**
+     * 初始化富文本编辑器
+     */
+    function initWangEditor(){
+        var E = window.wangEditor;
+        var editor = new E('#editor');
+        // 配置服务器端地址
+        editor.customConfig.uploadImgServer = '/upload'
+        editor.customConfig.uploadFileName = 'editorFile'
+
+        editor.create();
+
+        $("#btnSubmit").bind("click",function (){
+            var contentHtml = editor.txt.html();
+            $("#content").val(contentHtml);
+        });
+    }
 
     App.initDropzone({
         id: "#dropz",
