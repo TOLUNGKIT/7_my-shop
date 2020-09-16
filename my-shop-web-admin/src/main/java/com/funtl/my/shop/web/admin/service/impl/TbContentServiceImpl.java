@@ -69,7 +69,7 @@ public class TbContentServiceImpl implements TbContentService {
     }
 
     @Override
-    public void updated(TbContent tbContent) {
+    public void update(TbContent tbContent) {
         tbContentDao.updated(tbContent);
     }
 

@@ -1,6 +1,7 @@
 package com.funtl.my.shop.web.admin.service.impl;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
+import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.domain.TbContentCategory;
 import com.funtl.my.shop.web.admin.dao.TbContentCategoryDao;
 import com.funtl.my.shop.web.admin.service.TbContentCategoryService;
@@ -38,6 +39,26 @@ public class TbContentCategoryServiceImpl implements TbContentCategoryService {
     }
 
     @Override
+    public void update(TbContentCategory entity) {
+
+    }
+
+    @Override
+    public void deleteMulti(String[] ids) {
+
+    }
+
+    @Override
+    public PageInfo<TbContentCategory> page(int start, int length, int draw, TbContentCategory entity) {
+        return null;
+    }
+
+    @Override
+    public int count(TbContentCategory entity) {
+        return 0;
+    }
+
+    @Override
     public BaseResult save(TbContentCategory tbContentCategory) {
         BaseResult baseResult = checkTbContent(tbContentCategory);
 
@@ -60,6 +81,11 @@ public class TbContentCategoryServiceImpl implements TbContentCategoryService {
         }
 
         return baseResult;
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 
 

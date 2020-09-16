@@ -1,46 +1,48 @@
 package com.funtl.my.shop.commons.persistence;
 
+import com.funtl.my.shop.commons.dto.BaseResult;
+import com.funtl.my.shop.commons.dto.PageInfo;
+
 import java.util.List;
-import java.util.Map;
 
 /**
- * 所有数据访问层的基类
+ * 所有业务逻辑层的基类
  * @author: TOLUNGKIT
  * @version: 1.0.0
- * @date: 2020-09-15 18:05
+ * @date: 2020-09-16 20:23
  **/
-public interface BaseDao<T extends BaseEntity> {
+public interface BaseService<T extends BaseEntity> {
     /**
-     * 查询全部信息
+     * 查询全部
      * @return
      */
     public List<T> selectAll();
 
     /**
-     * 新增
+     * 保存信息
      * @param entity
+     * @return
      */
-    void insert(T entity);
+    BaseResult save(T entity);
 
     /**
-     * 删除
+     * 删除信息
      * @param id
      */
     void delete(Long id);
 
-
     /**
-     * 根据id查询信息
+     * 根据 ID 获取信息
      * @param id
      * @return
      */
     T getById(Long id);
 
     /**
-     * 更新
+     * 更新信息
      * @param entity
      */
-    void updated(T entity);
+    void update(T entity);
 
     /**
      * 批量删除
@@ -50,10 +52,11 @@ public interface BaseDao<T extends BaseEntity> {
 
     /**
      * 分页查询
-     * @param params,需要两个参数，start/记录开始的位置 length/每页记录数
+     * @param start
+     * @param length
      * @return
      */
-    List<T> page(Map<String, Object> params);
+    PageInfo<T> page(int start, int length, int draw, T entity);
 
     /**
      * 查询总笔数
