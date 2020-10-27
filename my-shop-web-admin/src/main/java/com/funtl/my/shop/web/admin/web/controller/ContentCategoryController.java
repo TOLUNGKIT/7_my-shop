@@ -72,9 +72,10 @@ public class ContentCategoryController {
     /**
      * 跳转用户表单页
      * @return
+     * @param tbContentCategory
      */
     @RequestMapping(value = "form", method = RequestMethod.GET)
-    public String form(){
+    public String form(TbContentCategory tbContentCategory){
         return "content_category_form";
     }
 

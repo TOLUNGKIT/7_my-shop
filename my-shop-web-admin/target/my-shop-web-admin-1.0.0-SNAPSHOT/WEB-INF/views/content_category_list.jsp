@@ -73,7 +73,7 @@
                                         <td>
                                             <a href="/content/category/form?id=${tbContentCategory.id}" class="btn btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;
                                             <button href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> 删除</button>&nbsp;&nbsp;&nbsp;
-                                            <a href="#" class="btn btn-default"><i class="fa fa-plus"></i> 新增下级菜单</a>
+                                            <a href="/content/category/form?parent.id=${tbContentCategory.id}&parent.name=${tbContentCategory.name}" type="button" class="btn btn-default"><i class="fa fa-plus"></i> 新增下级菜单</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
