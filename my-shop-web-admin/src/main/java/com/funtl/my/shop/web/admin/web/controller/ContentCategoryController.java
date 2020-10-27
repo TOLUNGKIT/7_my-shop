@@ -80,7 +80,7 @@ public class ContentCategoryController {
     }
 
     /**
-     * 保存信息
+     * 保存
      * @param tbContentCategory
      * @return
      */
@@ -88,16 +88,13 @@ public class ContentCategoryController {
     public String save(TbContentCategory tbContentCategory, Model model, RedirectAttributes redirectAttributes){
         BaseResult baseResult = tbContentCategoryService.save(tbContentCategory);
 
-        //保存成功
         if(baseResult.getStatus() == 200){
             redirectAttributes.addFlashAttribute("baseResult",baseResult);
-            return "redirect:/content/list";
+            return "redirect:/content/category/list";
         }
-
-        //保存失败
-        else {
+        else{
             model.addAttribute("baseResult",baseResult);
-            return "content_form";
+            return form(tbContentCategory);
         }
     }
 
