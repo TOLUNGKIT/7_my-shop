@@ -4,6 +4,7 @@ import com.funtl.my.shop.commons.persistence.BaseEntity;
 import lombok.Data;
 
 /**
+ * 分类管理
  * @author: TOLUNGKIT
  * @version: 1.0.0
  * @date: 2020-08-22 12:03
@@ -22,4 +23,5 @@ public class TbContentCategory extends BaseEntity {
      */
 //    @JsonProperty(value = "isParent")
     private Boolean isParent;
+    private TbContentCategory parent;
 }
