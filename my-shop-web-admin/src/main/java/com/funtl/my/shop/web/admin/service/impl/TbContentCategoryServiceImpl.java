@@ -1,16 +1,14 @@
 package com.funtl.my.shop.web.admin.service.impl;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
-import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.commons.validator.BeanValidator;
 import com.funtl.my.shop.domain.TbContentCategory;
+import com.funtl.my.shop.web.admin.abstracts.AbstractBaseTreeServiceImpl;
 import com.funtl.my.shop.web.admin.dao.TbContentCategoryDao;
 import com.funtl.my.shop.web.admin.service.TbContentCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author: TOLUNGKIT
@@ -19,45 +17,7 @@ import java.util.List;
  **/
 
 @Service
-public class TbContentCategoryServiceImpl implements TbContentCategoryService {
-
-    @Autowired
-    private TbContentCategoryDao tbContentCategoryDao;
-
-    @Override
-    public List<TbContentCategory> selectAll() {
-        return tbContentCategoryDao.selectAll();
-    }
-
-    @Override
-    public List<TbContentCategory> selectByPid(Long pid) {
-        return tbContentCategoryDao.selectByPid(pid);
-    }
-
-    @Override
-    public TbContentCategory getById(Long id) {
-        return tbContentCategoryDao.getById(id);
-    }
-
-    @Override
-    public void update(TbContentCategory entity) {
-        tbContentCategoryDao.updated(entity);
-    }
-
-    @Override
-    public void deleteMulti(String[] ids) {
-
-    }
-
-    @Override
-    public PageInfo<TbContentCategory> page(int start, int length, int draw, TbContentCategory entity) {
-        return null;
-    }
-
-    @Override
-    public int count(TbContentCategory entity) {
-        return 0;
-    }
+public class TbContentCategoryServiceImpl extends AbstractBaseTreeServiceImpl<TbContentCategory, TbContentCategoryDao> implements TbContentCategoryService {
 
     @Override
     public BaseResult save(TbContentCategory entity) {
@@ -98,34 +58,13 @@ public class TbContentCategoryServiceImpl implements TbContentCategoryService {
                     entity.setIsParent(true);
                 }
 
-                tbContentCategoryDao.insert(entity);
+                insert(entity);
             }
             // 修改
             else {
-                tbContentCategoryDao.updated(entity);
+                update(entity);
             }
             return BaseResult.success("保存信息成功");
         }
-    }
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-
-    /**
-     * 商品信息的有效性验证
-     * @param tbContentCategory
-     */
-    private BaseResult checkTbContent(TbContentCategory tbContentCategory){
-
-        BaseResult baseResult = BaseResult.success();
-
-        //非空验证
-        if(tbContentCategory.getName() == null){
-            baseResult = BaseResult.fail("内容的所属分类不能为空，请重新输入" );
-        }
-        return baseResult;
     }
 }
