@@ -4,7 +4,6 @@ import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.commons.persistence.BaseDao;
 import com.funtl.my.shop.commons.persistence.BaseEntity;
 import com.funtl.my.shop.commons.persistence.BaseService;
-import com.funtl.my.shop.domain.TbContent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import java.util.Map;
 public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends BaseDao<T>> implements BaseService<T> {
 
     @Autowired
-    private D dao;
+    protected D dao;
 
     /**
      * 查询全部信息
@@ -34,6 +33,7 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
      * 删除信息
      * @param id
      */
+    @Override
     public void delete(Long id){
         dao.delete(id);
     }
@@ -43,6 +43,7 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
      * @param id
      * @return
      */
+    @Override
     public T getById(Long id){
         return dao.getById(id);
     }
@@ -51,6 +52,7 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
      * 更新信息
      * @param entity
      */
+    @Override
     public void update(T entity){
         dao.updated(entity);
     }
@@ -59,6 +61,7 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
      * 批量删除
      * @param ids
      */
+    @Override
     public void deleteMulti(String[] ids){
         dao.deleteMulti(ids);
     }
@@ -67,16 +70,9 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
      * 查询总笔数
      * @return
      */
+    @Override
     public int count(T entity){
         return dao.count(entity);
-    }
-
-    /**
-     * 新增
-     * @param entity
-     */
-    public void insert(T entity){
-        dao.insert(entity);
     }
 
     /**

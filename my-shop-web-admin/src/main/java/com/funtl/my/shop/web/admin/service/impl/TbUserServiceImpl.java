@@ -1,19 +1,15 @@
 package com.funtl.my.shop.web.admin.service.impl;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
-import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.commons.validator.BeanValidator;
 import com.funtl.my.shop.domain.TbUser;
+import com.funtl.my.shop.web.admin.abstracts.AbstractBaseServiceImpl;
 import com.funtl.my.shop.web.admin.dao.TbUserDao;
 import com.funtl.my.shop.web.admin.service.TbUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author: TOLUNGKIT
@@ -21,14 +17,7 @@ import java.util.Map;
  * @date: 2020-08-13 20:52
  **/
 @Service
-public class TbUserServiceImpl implements TbUserService {
-    @Autowired
-    private TbUserDao tbUserDao;
-
-    @Override
-    public List<TbUser> selectAll() {
-        return tbUserDao.selectAll();
-    }
+public class TbUserServiceImpl extends AbstractBaseServiceImpl<TbUser,TbUserDao> implements TbUserService {
 
     @Override
     public BaseResult save(TbUser tbUser) {
@@ -47,36 +36,20 @@ public class TbUserServiceImpl implements TbUserService {
                 //密码需要加密处理
                 tbUser.setPassword(DigestUtils.md5DigestAsHex(tbUser.getPassword().getBytes()));
                 tbUser.setCreated(new Date());
-                tbUserDao.insert(tbUser);
+                dao.insert(tbUser);
             }
 
             // 编辑用户
             else{
-                tbUserDao.updated(tbUser);
+                update(tbUser);
             }
             return BaseResult.success("保存用户信息成功");
         }
     }
 
     @Override
-    public void delete(Long id) {
-        tbUserDao.delete(id);
-    }
-
-    @Override
-    public TbUser getById(Long id) {
-        return tbUserDao.getById(id);
-    }
-
-    @Override
-    public void update(TbUser tbUser) {
-
-        tbUserDao.updated(tbUser);
-    }
-
-    @Override
     public TbUser login(String email, String password) {
-        TbUser tbUser = tbUserDao.getByEmail(email);
+        TbUser tbUser = dao.getByEmail(email);
         if(tbUser != null){
             // 明文密码加密
             String Md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -89,36 +62,8 @@ public class TbUserServiceImpl implements TbUserService {
         return null;
     }
 
-    @Override
-    public void deleteMulti(String[] ids) {
-        tbUserDao.deleteMulti(ids);
-    }
-
-    @Override
-    public PageInfo<TbUser> page(int start, int length, int draw, TbUser tbUser) {
-        int count = tbUserDao.count(tbUser);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("length", length);
-        params.put("tbUser", tbUser);
-
-        PageInfo<TbUser> pageInfo = new PageInfo<>();
-        pageInfo.setDraw(draw);
-        pageInfo.setRecordsTotal(count);
-        pageInfo.setRecordsFiltered(count);
-        pageInfo.setData(tbUserDao.page(params));
-
-        return pageInfo;
-    }
-
-    @Override
-    public int count(TbUser tbUser) {
-        return tbUserDao.count(tbUser);
-    }
-
     /**
-     * 用户信息的有效性验证
+     * 用户信息的有效性验证(用 spring validation 后就不需要了)
      * @param tbUser
      */
 //    private BaseResult checkTbUser(TbUser tbUser){

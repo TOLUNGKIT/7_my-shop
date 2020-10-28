@@ -58,7 +58,7 @@ public class TbContentCategoryServiceImpl extends AbstractBaseTreeServiceImpl<Tb
                     entity.setIsParent(true);
                 }
 
-                insert(entity);
+                dao.insert(entity);
             }
             // 修改
             else {

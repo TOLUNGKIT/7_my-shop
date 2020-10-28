@@ -1,7 +1,6 @@
 package com.funtl.my.shop.web.admin.service.impl;
 
 import com.funtl.my.shop.commons.dto.BaseResult;
-import com.funtl.my.shop.commons.dto.PageInfo;
 import com.funtl.my.shop.commons.validator.BeanValidator;
 import com.funtl.my.shop.domain.TbContent;
 import com.funtl.my.shop.web.admin.abstracts.AbstractBaseServiceImpl;
@@ -10,8 +9,6 @@ import com.funtl.my.shop.web.admin.service.TbContentService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author: TOLUNGKIT
@@ -37,7 +34,7 @@ public class TbContentServiceImpl extends AbstractBaseServiceImpl<TbContent, TbC
             // 新增商品
             if(tbContent.getId() == null){
                 tbContent.setCreated(new Date());
-                insert(tbContent);
+                dao.insert(tbContent);
             }
 
             // 编辑用户
