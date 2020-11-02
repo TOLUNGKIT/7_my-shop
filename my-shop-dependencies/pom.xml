@@ -38,6 +38,7 @@
         <lombok.version>1.16.18</lombok.version>
         <hibernate-validator.version>5.3.4.Final</hibernate-validator.version>
         <commons-fileupload.version>1.3.2</commons-fileupload.version>
+        <apache-httpClient.version>4.5.5</apache-httpClient.version>
     </properties>
 
     <dependencyManagement>
@@ -178,6 +179,24 @@
                 <version>${jackson.version}</version>
             </dependency>
             <!-- Json End -->
+
+            <!-- Apache Http Begin -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache-httpClient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>fluent-hc</artifactId>
+                <version>${apache-httpClient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>${apache-httpClient.version}</version>
+            </dependency>
+            <!-- Apache Http End -->
 
             <dependency>
                 <groupId>org.projectlombok</groupId>

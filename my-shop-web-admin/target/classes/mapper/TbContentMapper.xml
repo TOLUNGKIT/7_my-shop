@@ -71,7 +71,7 @@
         a.id = #{id}
     </select>
 
-    <update id="update">
+    <update id="updated">
         UPDATE
           tb_content
         SET

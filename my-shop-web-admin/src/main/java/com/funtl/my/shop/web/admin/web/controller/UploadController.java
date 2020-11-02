@@ -58,7 +58,8 @@ public class UploadController {
 
         // dropzone 上传
         if(dropzFile != null){
-            result.put("fileName", UPLOAD_PATH + file.getName());
+            String serverPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            result.put("fileName", serverPath + UPLOAD_PATH + file.getName());
         }
 
         // wangEditor 上传

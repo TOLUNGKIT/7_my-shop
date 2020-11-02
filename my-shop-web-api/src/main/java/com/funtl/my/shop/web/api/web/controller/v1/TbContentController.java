@@ -37,16 +37,16 @@ public class TbContentController {
 
     /**
      * API文档 根据类别 ID 查询内容列表
-     * 请求地址：http://localhost:8081/contents/<category_id>
+     * 请求地址：http://localhost:8081/
      * 请求方式：GET
      * 请求参数：category_id 类目 ID 必须 数字
-     * @param categoryId
      * @return
      */
-    @RequestMapping(value = "{category_id}", method = RequestMethod.GET)
-    public BaseResult findContentByCategoryId(@PathVariable(value = "category_id") Long categoryId){
+    @RequestMapping(value = "ppt", method = RequestMethod.GET)
+    public BaseResult findPPT(){
         List<TbContentDTO> tbContentDTOS = null;
-        List<TbContent> tbContents = tbContentService.selectByCategoryId(categoryId);
+        List<TbContent> tbContents = tbContentService.selectByCategoryId(89L);
+
         if(tbContents != null && tbContents.size() >0){
             tbContentDTOS = new ArrayList<>();
             for (TbContent tbContent : tbContents) {
